@@ -61,11 +61,6 @@ public class LinkDisplayFragment extends Fragment {
         Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onCreate()");
         super.onCreate(savedInstanceState);
 
-        /*
-        final Intent intent = this.getIntent();
-        final String uri = intent.getStringExtra(Intent.EXTRA_TEXT);
-        Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onCreate(): uri: " + uri);
-        */
         this.url = null;
         try {
             this.url = this.getArguments().getString(GlobalDefines.BUNDLE_KEY_FOR_URL);
@@ -88,14 +83,6 @@ public class LinkDisplayFragment extends Fragment {
    ) {
        Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onCreateView()");
        super.onCreateView(inflater, container, savedInstanceState);
-
-       /*
-       //this.setContentView(R.layout.activity_linkdisplay);
-       SwipeBack.attach(this, Position.LEFT)
-           //.setDrawOverlay(true)
-           .setContentView(R.layout.link_display_fragment)
-           .setSwipeBackView(R.layout.swipeback_default);
-       */
 
        return inflater.inflate(R.layout.link_display_fragment, container, false);
    }
@@ -221,18 +208,12 @@ public class LinkDisplayFragment extends Fragment {
        }
 
        Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": loadNewUrl(): isNewUrl: " + Boolean.valueOf(isNewUrl).toString());
-       /*
-       this.linkViewPager.beginFakeDrag();
-       this.linkViewPager.fakeDragBy(50);
-       this.linkViewPager.endFakeDrag();
-       */
 
        if (isNewUrl) {
            // ...load the new url.
            this.webview.loadUrl(newUrl);
            this.url = newUrl;
        }
-
 
    }
 
@@ -247,14 +228,4 @@ public class LinkDisplayFragment extends Fragment {
        return this.url;
    }
 
-
-   /*
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        this.overridePendingTransition(
-                R.anim.swipeback_stack_to_front,
-                R.anim.swipeback_stack_right_out);
-    }
-    */
 }

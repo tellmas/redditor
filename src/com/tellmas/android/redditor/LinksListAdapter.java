@@ -159,15 +159,6 @@ public class LinksListAdapter extends BaseAdapter {
             }
         }
 
-        /*
-        int substringLenToDisplay = 15;
-        if (link.getTitle().length() < substringLenToDisplay) {
-            substringLenToDisplay = link.getTitle().length();
-        }
-        Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": getView(): " + link.getTitle().substring(0,substringLenToDisplay));
-        Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": getView(): thumbnail uri: " + thumbnailUri);
-        */
-
         if (thumbnailUri.length() > 0) {
             try {
                 thumbnailView.setImageDrawable(this.hourglass);
@@ -185,10 +176,6 @@ public class LinksListAdapter extends BaseAdapter {
 
         // === submission time ago ===
         final TextView timeAgoView = (TextView) convertView.findViewById(R.id.link_time_ago);
-        /*
-        Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": getView(): " + System.currentTimeMillis() + " current time in milliseconds");
-        Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": getView(): " + link.getCreated_utc() + " created time utc");
-        */
         final StringBuilder submissionTimeSB = new StringBuilder();
         RedditorTime timeAgo = new RedditorTime(
                 System.currentTimeMillis() / 1000 - theLink.getCreated_utc()
@@ -239,8 +226,6 @@ public class LinksListAdapter extends BaseAdapter {
         submissionTimeSB.append(" ");
         submissionTimeSB.append(this.activity.getResources().getString(R.string.ago));
         timeAgoView.setText(submissionTimeSB.toString());
-        //timeAgoView.setText("" + link.getCreated_utc());
-
 
         // --- author ---
         final TextView authorView = (TextView) convertView.findViewById(R.id.link_author);
@@ -268,7 +253,6 @@ public class LinksListAdapter extends BaseAdapter {
             domain = "self." + subreddit;
         } else {
             try {
-                //String[] parts = link.getUrl().split("", 1);
                 domain = URI.create(theLink.getUrl()).getHost();
             } catch (final IllegalArgumentException iae) {
                 domain = "";

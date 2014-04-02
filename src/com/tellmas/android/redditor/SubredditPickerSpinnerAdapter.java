@@ -16,20 +16,17 @@ public class SubredditPickerSpinnerAdapter implements SpinnerAdapter {
 
     private final String[] menuItems;
     private final LayoutInflater inflater;
-    //private final Activity activity;
     private final String sortByDisplayText;
 
     /**
      *
      */
-    public SubredditPickerSpinnerAdapter(Activity activity, String[] menuItems, String sortByDisplayText) {
-
-        //this.activity = activity;
+    public SubredditPickerSpinnerAdapter(final Activity activity, final String[] menuItems, final String sortByDisplayText) {
 
         LayoutInflater li = null;
         try {
             li = activity.getLayoutInflater();
-        } catch (NullPointerException npe) {
+        } catch (final NullPointerException npe) {
             Log.w(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": SubredditPickerSpinnerAdapter(): 'activity' param was null", npe);
         }
         this.inflater = li;
@@ -52,7 +49,7 @@ public class SubredditPickerSpinnerAdapter implements SpinnerAdapter {
      * @see android.widget.Adapter#getItem(int)
      */
     @Override
-    public Object getItem(int position) {
+    public Object getItem(final int position) {
         return this.menuItems[position];
     }
 
@@ -61,7 +58,7 @@ public class SubredditPickerSpinnerAdapter implements SpinnerAdapter {
      * @see android.widget.Adapter#getItemId(int)
      */
     @Override
-    public long getItemId(int position) {
+    public long getItemId(final int position) {
         return position;
     }
 
@@ -70,7 +67,7 @@ public class SubredditPickerSpinnerAdapter implements SpinnerAdapter {
      * @see android.widget.Adapter#getItemViewType(int)
      */
     @Override
-    public int getItemViewType(int position) {
+    public int getItemViewType(final int position) {
         // adapter always returns the same type of View for all items.. so return 0
         return 0;
     }
@@ -80,7 +77,7 @@ public class SubredditPickerSpinnerAdapter implements SpinnerAdapter {
      * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
      */
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
         Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": getView()");
 
         Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": getView(): position: " + position);
@@ -89,10 +86,10 @@ public class SubredditPickerSpinnerAdapter implements SpinnerAdapter {
             convertView = (ViewGroup) this.inflater.inflate(R.layout.layout_subreddit_picker_header, parent, false);
         }
 
-        TextView subredditName = (TextView) convertView.findViewById(R.id.subreddit_picker_subreddit);
+        final TextView subredditName = (TextView) convertView.findViewById(R.id.subreddit_picker_subreddit);
         subredditName.setText((String) this.getItem(0));
 
-        TextView sortBy = (TextView) convertView.findViewById(R.id.subreddit_picker_sort_by);
+        final TextView sortBy = (TextView) convertView.findViewById(R.id.subreddit_picker_sort_by);
         sortBy.setText(this.sortByDisplayText);
 
 
@@ -137,7 +134,7 @@ public class SubredditPickerSpinnerAdapter implements SpinnerAdapter {
      * @see android.widget.Adapter#registerDataSetObserver(android.database.DataSetObserver)
      */
     @Override
-    public void registerDataSetObserver(DataSetObserver observer) {
+    public void registerDataSetObserver(final DataSetObserver observer) {
         // no observer needed
         return;
     }
@@ -147,7 +144,7 @@ public class SubredditPickerSpinnerAdapter implements SpinnerAdapter {
      * @see android.widget.Adapter#unregisterDataSetObserver(android.database.DataSetObserver)
      */
     @Override
-    public void unregisterDataSetObserver(DataSetObserver observer) {
+    public void unregisterDataSetObserver(final DataSetObserver observer) {
         // no need
         return;
     }
@@ -157,7 +154,7 @@ public class SubredditPickerSpinnerAdapter implements SpinnerAdapter {
      * @see android.widget.SpinnerAdapter#getDropDownView(int, android.view.View, android.view.ViewGroup)
      */
     @Override
-    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+    public View getDropDownView(final int position, View convertView, final ViewGroup parent) {
         Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": getDropDownView()");
 
         if (convertView == null || !(convertView instanceof TextView)) {

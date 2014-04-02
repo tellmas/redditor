@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.tellmas.android.redditor;
 
 import android.app.Activity;

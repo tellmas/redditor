@@ -11,8 +11,6 @@ import android.os.Bundle;
 //import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-//import android.view.Menu;
-//import android.view.MenuItem;
 
 
 /**
@@ -129,20 +127,8 @@ public class Redditor extends ActionBarActivity { //FragmentActivity {
    protected void displayNewLinkFragment(final URI newUrl) {
        Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": displayNewLinkFragment()");
 
-       /*
-       final Bundle argsBundle = new Bundle();
-       argsBundle.putString(GlobalDefines.BUNDLE_KEY_FOR_URL, url.toString());
-       this.linkDisplayFragment = new LinkDisplayFragment();
-       this.linkDisplayFragment.setArguments(argsBundle);
-       */
-
-       //final String currentUrl = this.linkDisplayFragment.getCurrentUrl();
-       //Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": displayNewLinkFragment(): newUrl: " + newUrl);
-       //Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": displayNewLinkFragment(): currentUrl: " + currentUrl);
-
        this.linkDisplayFragment.loadNewUrl(newUrl.toString());
        // === Switch to the we webview fragment ===
-       //this.getSupportActionBar().hide();
        this.linkViewPager.setCurrentItem(1, true);
        this.currentlyDisplayedFragment = this.linkDisplayFragment;
    }

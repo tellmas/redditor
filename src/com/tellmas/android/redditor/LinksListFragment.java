@@ -188,12 +188,6 @@ public class LinksListFragment extends Fragment implements ActionBar.OnNavigatio
                 LinksListFragment.this.parentActivity.displayNewLinkFragment(theLinkUri);
             }
         });
-        /*
-        this.links = new ArrayList<RedditLink>();
-        this.listAdapter = new LinksListAdapter(this.links, this.parentActivity);
-        this.listView.setAdapter(this.listAdapter);
-        */
-
 
         // === the hourglass ===
         this.hourglass = (ProgressBar) this.getView().findViewById(R.id.hourglass);
@@ -219,41 +213,14 @@ public class LinksListFragment extends Fragment implements ActionBar.OnNavigatio
         // === Subreddit Picker (Spinner) ===
         this.subreddits = this.getResources().getStringArray(R.array.subreddit_picker_subreddits);
         this.subredditDisplayNames = this.getResources().getStringArray(R.array.subreddit_picker_subreddit_display_names);
-        /*
-        ArrayList<String> subredditPickerMenuItemsList = new ArrayList<String>(Arrays.asList(subredditPickerMenuItems));
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(
-                        this,
-                        android.R.layout.simple_list_item_1,
-                        android.R.id.text1,
-                        subredditPickerMenuItemsList
-                );
-        */
-        /*
-        for (String id : subredditPickerMenuItems) {
-            Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onCreate(): menu id: " + id);
-        }
-        */
-        //SubredditPickerSpinnerAdapter subredditPickerAdapter =
-        //        new SubredditPickerSpinnerAdapter(this, subredditPickerMenuItems, this.currentSort);
-        //final Spinner subredditPicker = (Spinner) this.getView().findViewById(R.id.subreddit_picker);
         final SubredditPickerAdapter<String> subredditPickerAdapter =
                 new SubredditPickerAdapter<String>(this.parentActivity, R.layout.layout_subreddit_picker_header, this.subredditDisplayNames, GlobalDefines.DEFAULT_SORT);
         subredditPickerAdapter.setDropDownViewResource(R.layout.layout_subreddit_picker_item);
-        //subredditPicker.setAdapter(subredditPickerAdapter);
         final ActionBar actionBar = this.parentActivity.getActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
-        //actionBar.setCustomView(subredditPicker);
-        //actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onActivityCreated(): setting subreddit picker callbacks");
         actionBar.setListNavigationCallbacks(subredditPickerAdapter, this);
-        //actionBar.setListNavigationCallbacks(adapter, this);
-
-
-        // --- initial listing ---
-        // onNavigationItemSelected() gets fired on initial load so don't need this
-        //this.getAndDisplayListing(GlobalDefines.DEFAULT_LISTING, GlobalDefines.DEFAULT_SORT);
     }
 
 
@@ -371,33 +338,9 @@ public class LinksListFragment extends Fragment implements ActionBar.OnNavigatio
 
     /**
      *
-     * @param links  TODO
-     */
-    private void displayLinks() {
-        Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": displayLinks()");
-
-        Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": displayLinks(): num of links: " + Integer.valueOf(this.links.size()).toString());
-
-        /*
-        // only display the first 20 (or less if the list isn't that long)
-        int exclusiveEndIndex = 20;
-        if (exclusiveEndIndex > this.links.size()) {
-            exclusiveEndIndex = this.links.size();
-        }
-        final LinksListAdapter listAdapter = new LinksListAdapter(this.links.subList(0, exclusiveEndIndex), this.parentActivity);
-        this.listView.setAdapter(listAdapter);
-        */
-    }
-
-
-    /**
-     *
      */
     private void updateSpinner() {
         Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": updateSpinner()");
-
-        //Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": updateSpinner(): " +
-        //        "type of the custom view: " + subredditPickerView.getClass().getCanonicalName());
 
         final TextView subredditName = (TextView) this.parentActivity.findViewById(R.id.subreddit_picker_subreddit);
         try {
@@ -407,15 +350,11 @@ public class LinksListFragment extends Fragment implements ActionBar.OnNavigatio
         }
 
         final TextView sortByText = (TextView) this.parentActivity.findViewById(R.id.subreddit_picker_sort_by);
-        //final TextView sortByText = (TextView) this.getView().findViewById(R.id.subreddit_picker_sort_by);
         try {
             sortByText.setText(this.currentSort);
         } catch (final Exception e) {
             Log.w(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": updateSpinner(): error updating the sort by text in the Spinner", e);
         }
-
-        //ActionBar actionBar = this.getActionBar();
-        //Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": updateSpinner(): " + actionBar.getNavigationItemCount());
     }
 
 
@@ -492,8 +431,6 @@ public class LinksListFragment extends Fragment implements ActionBar.OnNavigatio
     */
    public void onClickForSubreddit(final View view) {
        Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onClickForSubreddit()");
-
-       //deprecated: this.currentSubreddit = (String) view.getTag();
        Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onClickForSubreddit(): new subreddit: " + this.subredditDisplayNames[this.currentSubredditIndex]);
 
        // get the new listing (and display it)
@@ -510,11 +447,9 @@ public class LinksListFragment extends Fragment implements ActionBar.OnNavigatio
         Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": toggleHourGlass()");
 
         int hgVisibility;
-        int listVisibility;
 
         try {
             hgVisibility = this.hourglass.getVisibility();
-            listVisibility = this.listView.getVisibility();
         } catch (final Exception e) {
             Log.e(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": toggleHourGlass(): error getting visibility", e);
             return false;
@@ -528,9 +463,7 @@ public class LinksListFragment extends Fragment implements ActionBar.OnNavigatio
                     this.hourglass.setVisibility(View.VISIBLE);
                     break;
             }
-            //this.hourglass.setVisibility(listVisibility);
             this.hourglass.setProgress(0);
-            //this.listView.setVisibility(hgVisibility);
         } catch (final Exception e) {
             Log.e(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": toggleHourGlass(): error setting visibility", e);
             return false;

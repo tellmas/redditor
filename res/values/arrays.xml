@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_by_strings">
+        <item>hot</item>
+        <item>new</item>
+        <item>rising</item>
+        <item>controversial</item>
+        <item>top</item>
+        <item>gilded</item>
+    </string-array>
+    <string-array name="subreddit_picker_subreddit_display_names">
+        <item>Front</item>
+        <item>All</item>
+        <item>Pics</item>
+        <item>Funny</item>
+        <item>Gaming</item>
+        <item>AskReddit</item>
+    </string-array>
+    <string-array name="subreddit_picker_subreddits">
+        <item></item>
+        <item>all</item>
+        <item>pics</item>
+        <item>funny</item>
+        <item>gaming</item>
+        <item>askreddit</item>
+    </string-array>
+</resources>

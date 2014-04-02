@@ -1,0 +1,33 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/optionsmenu_hot"
+        android:titleCondensed="hot"
+        android:showAsAction="never"
+        android:title="@string/optionsmenu_hot"/>
+    <item
+        android:id="@+id/optionsmenu_new"
+        android:titleCondensed="new"
+        android:showAsAction="never"
+        android:title="@string/optionsmenu_new"/>
+    <item
+        android:id="@+id/optionsmenu_rising"
+        android:titleCondensed="rising"        
+        android:showAsAction="never"
+        android:title="@string/optionsmenu_rising"/>
+    <item
+        android:id="@+id/optionsmenu_controversial"
+        android:titleCondensed="controversial"
+        android:showAsAction="never"
+        android:title="@string/optionsmenu_controversial"/>
+    <item
+        android:id="@+id/optionsmenu_top"
+        android:titleCondensed="top"        
+        android:showAsAction="never"
+        android:title="@string/optionsmenu_top"/>
+    <item
+        android:id="@+id/optionsmenu_gilded"
+        android:titleCondensed="gilded"        
+        android:showAsAction="never"
+        android:title="@string/optionsmenu_gilded"/>
+</menu>

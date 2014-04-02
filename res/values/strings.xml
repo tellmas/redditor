@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Fetchit for Reddit</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="empty"></string>
+    
+    <string name="comments">Comments</string>
+    <string name="comment">Comment</string>
+    
+    <string name="subreddit_uri_prefix">/r/</string>
+
+    <string name="second">second</string>
+    <string name="seconds">seconds</string>    
+    <string name="minute">minute</string>
+    <string name="minutes">minutes</string>
+    <string name="hour">hour</string>
+    <string name="hours">hours</string>
+    <string name="day">day</string>
+    <string name="days">days</string>
+    <string name="ago">ago</string>
+    <string name="submitted">Submitted</string>
+    <string name="by">by</string>
+    
+    
+    
+    <!-- Sort By menu -->
+    <string name="optionsmenu_hot">hot</string>
+    <string name="optionsmenu_new">new</string>
+    <string name="optionsmenu_rising">rising</string>
+    <string name="optionsmenu_controversial">controversial</string>
+    <string name="optionsmenu_top">top</string>
+    <string name="optionsmenu_gilded">gilded</string>
+    
+    <!-- Display Link Activity -->
+    <string name="activity_title_display_link">Displaying Link</string>
+    
+</resources>

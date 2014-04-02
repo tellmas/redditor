@@ -330,7 +330,7 @@ public class LinksListFragment extends Fragment implements ActionBar.OnNavigatio
             final StringBuilder valueOfAfter = new StringBuilder();
             try {
                 links = this.reddit.listingFor(this.subreddit, this.sortBy, this.before, this.after, -1, this.count, null, valueOfBefore, valueOfAfter);
-                Log.e(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": run(): Sending request for:" +
+                Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": run(): Sending request for:" +
                         " subreddit: \"" + this.subreddit + "\"" +
                         ", sort by: \"" + this.sortBy + "\"" +
                         ", before: \"" + this.before + "\"" +

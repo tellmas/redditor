@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
+
 /**
  *
  */
@@ -67,7 +68,6 @@ public class ViewPagerWithCustomDuration extends ViewPager {
    }
 
 
-
    /**
     *
     */
@@ -83,6 +83,7 @@ public class ViewPagerWithCustomDuration extends ViewPager {
        public ScrollerWithCustomDuration(final Context context) {
            super(context);
        }
+
 
        /**
         *
@@ -122,6 +123,5 @@ public class ViewPagerWithCustomDuration extends ViewPager {
        }
 
    } // end class ScrollerWithCustomDuration
-
 
 } // end class ViewPagerWithCustomDuration

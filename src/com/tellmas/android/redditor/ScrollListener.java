@@ -31,7 +31,7 @@ public abstract class ScrollListener implements AbsListView.OnScrollListener {
     *
     */
    public ScrollListener() {
-       this.visibleThreshold = this.visibleThreshold;
+       this.visibleThreshold = DEFAULT_VISIBLE_THRESHOLD;
        this.startingPageIndex = DEFAULT_STARTING_PAGE_INDEX;
        this.currentPage = this.startingPageIndex;
    }

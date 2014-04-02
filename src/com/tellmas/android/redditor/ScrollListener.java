@@ -60,8 +60,6 @@ public abstract class ScrollListener implements AbsListView.OnScrollListener {
    }
 
 
-
-
    /**
     *
     */
@@ -81,8 +79,8 @@ public abstract class ScrollListener implements AbsListView.OnScrollListener {
            }
        }
 
-       // If it’s still loading, we check to see if the dataset count has
-       // changed, if so we conclude it has finished loading and update the current page
+       // If it's still loading, we check to see if the dataset count has changed.
+       // If so we conclude it has finished loading and update the current page
        // number and total item count.
        if (this.loading && (totalItemCount > this.previousTotalItemCount)) {
            this.loading = false;
@@ -90,14 +88,15 @@ public abstract class ScrollListener implements AbsListView.OnScrollListener {
            this.currentPage++;
        }
 
-       // If it isn’t currently loading, we check to see if we have breached
-       // the visibleThreshold and need to reload more data.
+       // If it isn't currently loading, we check to see if we have breached the visibleThreshold
+       // and need to reload more data.
        // If we do need to reload some more data, we execute onLoadMore to fetch the data.
-       if (!this.loading && (totalItemCount - visibleItemCount)<=(firstVisibleItem + this.visibleThreshold)) {
+       if (!this.loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + this.visibleThreshold)) {
            this.onTimeToLoadMoreData(this.currentPage + 1, totalItemCount);
            this.loading = true;
        }
    }
+
 
    /**
     *

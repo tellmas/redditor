@@ -18,6 +18,7 @@
    public *;
 }
 
+
 -assumenosideeffects class android.util.Log {
     public static int v(...);
     public static int d(...);
@@ -25,3 +26,40 @@
     public static int w(...);
 }
 
+
+-dontobfuscate
+
+
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.preference.Preference
+-keep public class com.android.vending.billing.IInAppBillingService
+-keep public class * extends android.view.View {
+    public <init>(android.content.Context);
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+-keepclassmembers class * extends android.content.Context {
+    public void *(android.view.View);
+    public void *(android.view.MenuItem);
+}
+
+
+-libraryjars libs
+-dontwarn org.w3c.dom**
+#-keep class org.w3c.dom** { *; }
+#-keep interface org.w3c.dom** { *; }
+-dontwarn org.joda**
+#-keep class org.joda** { *; }
+#-keep interface org.joda** { *; }
+-keep class org.codehaus.jackson** { *; }
+-keep interface org.codehaus.jackson** { *; }

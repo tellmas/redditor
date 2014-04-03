@@ -18,7 +18,7 @@ public final class GlobalDefines extends Application {
     /**
      *
      */
-    public static final String USER_AGENT = "fetchit/0.2 by tellmas";
+    public static final String USER_AGENT = "fetchit/0.5 by tellmas";
 
 
 

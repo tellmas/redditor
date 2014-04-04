@@ -128,7 +128,7 @@ public class Redditor extends ActionBarActivity { //FragmentActivity {
        Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": displayNewLinkFragment()");
 
        this.linkDisplayFragment.loadNewUrl(newUrl.toString());
-       // === Switch to the we webview fragment ===
+       // === Switch to the webview fragment ===
        this.linkViewPager.setCurrentItem(1, true);
        this.currentlyDisplayedFragment = this.linkDisplayFragment;
    }

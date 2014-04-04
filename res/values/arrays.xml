@@ -9,7 +9,7 @@
         <item>gilded</item>
     </string-array>
     <string-array name="subreddit_picker_subreddit_display_names">
-        <item>Front</item>
+        <item>Front Page</item>
         <item>All</item>
         <item>Pics</item>
         <item>Funny</item>

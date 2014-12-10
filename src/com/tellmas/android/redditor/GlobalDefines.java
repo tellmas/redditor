@@ -41,7 +41,6 @@ public final class GlobalDefines extends Application {
     public static final String BUNDLE_KEY_LIST_OF_LINKS = "bundlekeylistoflinks";
     public static final String BUNDLE_KEY_FOR_URL = "bundlekeyforurl";
 
-
     // ==== ====
     public static final String SUBREDDIT_URI_PREFIX = "/r/";
 
@@ -85,6 +84,72 @@ public final class GlobalDefines extends Application {
 
 
         return time;
+    }
+
+
+    /**
+     * TODO
+     */
+    public static String submissionTimeStringBuilder(String submissionTime, Context context) throws NumberFormatException {
+        return submissionTimeStringBuilder(Long.parseLong(submissionTime), context);
+    }
+
+
+    /**
+     * TODO
+     */
+    public static String submissionTimeStringBuilder(long submissionTime, Context context) {
+
+        final StringBuilder submissionTimeSB = new StringBuilder();
+        RedditorTime timeAgo = new RedditorTime(
+                System.currentTimeMillis() / 1000 - submissionTime
+                ,RedditorTimeUnit.SECONDS
+        );
+        timeAgo = GlobalDefines.convertToAppropriateTimeUnits(timeAgo);
+        submissionTimeSB.append(Long.toString(timeAgo.getTimeValue()));
+        submissionTimeSB.append(" ");
+        boolean isSingularValue = false;
+        if (timeAgo.getTimeValue() == 1) {
+            isSingularValue = true;
+        }
+        int timeUnitId = 0;
+        switch(timeAgo.getTimeUnit()) {
+            case SECONDS:
+                if (isSingularValue) {
+                    timeUnitId = R.string.second;
+                } else {
+                    timeUnitId = R.string.seconds;
+                }
+                break;
+            case MINUTES:
+                if (isSingularValue) {
+                    timeUnitId = R.string.minute;
+                } else {
+                    timeUnitId = R.string.minutes;
+                }
+                break;
+            case HOURS:
+                if (isSingularValue) {
+                    timeUnitId = R.string.hour;
+                } else {
+                    timeUnitId = R.string.hours;
+                }
+                break;
+            case DAYS:
+                if (isSingularValue) {
+                    timeUnitId = R.string.day;
+                } else {
+                    timeUnitId = R.string.days;
+                }
+                break;
+            default:
+                timeUnitId = R.string.empty;
+                break;
+        }
+        submissionTimeSB.append(context.getResources().getString(timeUnitId));
+        submissionTimeSB.append(" ");
+        submissionTimeSB.append(context.getResources().getString(R.string.ago));
+        return submissionTimeSB.toString();
     }
 
 

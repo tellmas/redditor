@@ -176,56 +176,7 @@ public class LinksListAdapter extends BaseAdapter {
 
         // === submission time ago ===
         final TextView timeAgoView = (TextView) convertView.findViewById(R.id.link_time_ago);
-        final StringBuilder submissionTimeSB = new StringBuilder();
-        RedditorTime timeAgo = new RedditorTime(
-                System.currentTimeMillis() / 1000 - theLink.getCreated_utc()
-                ,RedditorTimeUnit.SECONDS
-        );
-        timeAgo = GlobalDefines.convertToAppropriateTimeUnits(timeAgo);
-        submissionTimeSB.append(Long.toString(timeAgo.getTimeValue()));
-        submissionTimeSB.append(" ");
-        boolean isSingularValue = false;
-        if (timeAgo.getTimeValue() == 1) {
-            isSingularValue = true;
-        }
-        int timeUnitId = 0;
-        switch(timeAgo.getTimeUnit()) {
-            case SECONDS:
-                if (isSingularValue) {
-                    timeUnitId = R.string.second;
-                } else {
-                    timeUnitId = R.string.seconds;
-                }
-                break;
-            case MINUTES:
-                if (isSingularValue) {
-                    timeUnitId = R.string.minute;
-                } else {
-                    timeUnitId = R.string.minutes;
-                }
-                break;
-            case HOURS:
-                if (isSingularValue) {
-                    timeUnitId = R.string.hour;
-                } else {
-                    timeUnitId = R.string.hours;
-                }
-                break;
-            case DAYS:
-                if (isSingularValue) {
-                    timeUnitId = R.string.day;
-                } else {
-                    timeUnitId = R.string.days;
-                }
-                break;
-            default:
-                timeUnitId = R.string.empty;
-                break;
-        }
-        submissionTimeSB.append(this.activity.getResources().getString(timeUnitId));
-        submissionTimeSB.append(" ");
-        submissionTimeSB.append(this.activity.getResources().getString(R.string.ago));
-        timeAgoView.setText(submissionTimeSB.toString());
+        timeAgoView.setText(GlobalDefines.submissionTimeStringBuilder(theLink.getCreated_utc(), this.activity));
 
         // --- author ---
         final TextView authorView = (TextView) convertView.findViewById(R.id.link_author);

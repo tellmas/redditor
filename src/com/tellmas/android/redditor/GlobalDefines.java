@@ -3,6 +3,7 @@ package com.tellmas.android.redditor;
 import java.util.concurrent.TimeUnit;
 
 import android.app.Application;
+import android.content.Context;
 
 /**
  * Global constants for this app.

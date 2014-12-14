@@ -2,29 +2,30 @@ package com.tellmas.android.redditor;
 
 import java.net.URI;
 
+import com.cd.reddit.Reddit;
 import com.cd.reddit.RedditException;
-//import android.app.Fragment;
-import android.support.v4.app.Fragment;
+
+import android.app.Activity;
+import android.app.Fragment;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-//import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-//import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
 
 /**
  *
  */
-public class Redditor extends ActionBarActivity { //FragmentActivity {
+public class Redditor extends Activity {
 
     private LinkViewPagerAdapter linkPagerAdapter;
     private ViewPagerWithCustomDuration linkViewPager;
 
     private LinksListFragment linksListFragment;
     private LinkDisplayFragment linkDisplayFragment;
+    private CommentsFragment commentsFragment;
     private Fragment currentlyDisplayedFragment;
 
+    private Reddit reddit;
 
     private final Redditor self = this;
 
@@ -52,10 +53,13 @@ public class Redditor extends ActionBarActivity { //FragmentActivity {
 
        // === LinkDisplayFragment ===
        Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onCreate(): instantiating a LinkDisplayFragment");
-       this.linkDisplayFragment = LinkDisplayFragment.newInstance(null);
+       this.linkDisplayFragment = LinkDisplayFragment.newInstance(null, null, null);
 
+       // === CommentsFragment ===
+       Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onCreate(): instantiating a CommentsFragment");
+       this.commentsFragment = CommentsFragment.newInstance(null, null);
 
-       this.linkPagerAdapter = new LinkViewPagerAdapter(this.getSupportFragmentManager());
+       this.linkPagerAdapter = new LinkViewPagerAdapter(this.getFragmentManager());
        this.linkPagerAdapter.init(this);
        this.linkViewPager = (ViewPagerWithCustomDuration) this.findViewById(R.id.redditor);
        this.linkViewPager.setScrollDurationFactor(GlobalDefines.SCROLL_DURATION_FACTOR);
@@ -63,7 +67,7 @@ public class Redditor extends ActionBarActivity { //FragmentActivity {
        this.linkViewPager.setOnPageChangeListener(new OnPageChangeListener() {
            @Override
            public void onPageSelected(final int position) {
-               Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onPageSelected()");
+               Log.d(GlobalDefines.LOG_TAG, "OnPageChangeListener: onPageSelected()");
 
                switch (position) {
                    case 0:
@@ -85,6 +89,9 @@ public class Redditor extends ActionBarActivity { //FragmentActivity {
            public void onPageScrollStateChanged(final int state) {
            }
        });
+
+       // --- The raw4j master object ---
+       this.reddit = new Reddit(GlobalDefines.USER_AGENT);
    }
 
 
@@ -113,6 +120,9 @@ public class Redditor extends ActionBarActivity { //FragmentActivity {
            case 1:
                fragment = this.linkDisplayFragment;
                break;
+           case 2:
+               fragment = this.commentsFragment;
+               break;
            default:
                fragment = this.currentlyDisplayedFragment;
        }
@@ -124,10 +134,23 @@ public class Redditor extends ActionBarActivity { //FragmentActivity {
    /**
     *
     */
-   protected void displayNewLinkFragment(final URI newUrl) {
+   protected void displayCommentsFragment(final String subreddit, final String linkId) {
+       Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": displayCommentsFragment()");
+
+       this.commentsFragment.loadNewComments(subreddit, linkId);
+       // === Switch to the comments fragment ===
+       this.linkViewPager.setCurrentItem(2, true);
+       this.currentlyDisplayedFragment = this.commentsFragment;
+   }
+
+
+   /**
+    *
+    */
+   protected void displayNewLinkFragment(final String subreddit, final String linkId, final URI newUrl) {
        Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": displayNewLinkFragment()");
 
-       this.linkDisplayFragment.loadNewUrl(newUrl.toString());
+       this.linkDisplayFragment.loadNewLink(subreddit, linkId, newUrl.toString());
        // === Switch to the webview fragment ===
        this.linkViewPager.setCurrentItem(1, true);
        this.currentlyDisplayedFragment = this.linkDisplayFragment;
@@ -157,6 +180,9 @@ public class Redditor extends ActionBarActivity { //FragmentActivity {
        if (this.currentlyDisplayedFragment == this.linkDisplayFragment) {
            this.linkViewPager.setCurrentItem(0, true);
            this.currentlyDisplayedFragment = this.linksListFragment;
+       } else if (this.currentlyDisplayedFragment == this.commentsFragment) {
+           this.linkViewPager.setCurrentItem(1, true);
+           this.currentlyDisplayedFragment = this.linkDisplayFragment;
        } else {
            super.onBackPressed();
        }
@@ -169,6 +195,14 @@ public class Redditor extends ActionBarActivity { //FragmentActivity {
    protected void handleRedditException(final RedditException re) {
        Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": handleRedditException()");
 
+   }
+
+
+   /**
+    *
+    */
+   public Reddit getRedditObject() {
+       return this.reddit;
    }
 
 }

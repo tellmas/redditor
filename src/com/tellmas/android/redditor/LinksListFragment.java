@@ -5,8 +5,7 @@ import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
-//import android.app.Fragment;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -185,7 +184,11 @@ public class LinksListFragment extends Fragment implements ActionBar.OnNavigatio
                 } catch (final IllegalArgumentException iae) {
                     Log.e(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onItemClick(): " + linkUrl + " is not a proper url");
                 }
-                LinksListFragment.this.parentActivity.displayNewLinkFragment(theLinkUri);
+                LinksListFragment.this.parentActivity.displayNewLinkFragment(
+                        link.getSubreddit(),
+                        link.getId(),
+                        theLinkUri);
+
             }
         });
 
@@ -207,7 +210,7 @@ public class LinksListFragment extends Fragment implements ActionBar.OnNavigatio
 
 
         // === Reddit api library setup ===
-        this.reddit = new Reddit(GlobalDefines.USER_AGENT);
+        this.reddit = this.parentActivity.getRedditObject();
 
 
         // === Subreddit Picker (Spinner) ===

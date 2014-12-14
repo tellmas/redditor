@@ -23,6 +23,7 @@
     <string name="submitted">Submitted</string>
     <string name="by">by</string>
     
+    <string name="points_for_score">{value} points</string>
     
     
     <!-- Sort By menu -->

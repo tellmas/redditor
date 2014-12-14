@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/comment_view"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    style="@style/CommentView">
+    <LinearLayout
+        android:orientation="vertical"
+        style="@style/CommentViewInterior">
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal">
+	        <TextView
+	            android:id="@+id/comment_view_author"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            style="@style/CommentViewMetadata.Author"/>
+	        <TextView
+	            android:id="@+id/comment_view_score"
+	            android:text="@string/points_for_score"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            style="@style/CommentViewMetadata"/>
+	        <TextView
+	            android:id="@+id/comment_view_time"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            style="@style/CommentViewMetadata.Time"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/comment_view_text"
+            android:autoLink="web"
+            style="@style/CommentViewInterior.Text"/>
+    </LinearLayout>
+
+</LinearLayout>

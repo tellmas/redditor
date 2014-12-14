@@ -35,12 +35,16 @@ public final class GlobalDefines extends Application {
      *
      */
     public static final String REDDIT_API_LISTING_DEFAULT = "hot.json";
+    public static final String REDDIT_TYPE_MORE = "more";
 
 
 
     //  ************************ Bundle keys ************************
     public static final String BUNDLE_KEY_LIST_OF_LINKS = "bundlekeylistoflinks";
     public static final String BUNDLE_KEY_FOR_URL = "bundlekeyforurl";
+
+    public static final String BUNDLE_KEY_FOR_SUBREDDIT_NAME = "bundlekeyforsubreddit";
+    public static final String BUNDLE_KEY_FOR_LINK_ID = "bundlekeyforid";
 
     // ==== ====
     public static final String SUBREDDIT_URI_PREFIX = "/r/";

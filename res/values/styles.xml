@@ -17,4 +17,63 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="LinkInfo" parent="@style/CommentViewInterior">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    <style name="LinkInfo.Item">
+        <item name="android:textColor">#a0a0a0</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="LinkInfo.Item.Score">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="LinkInfo.Item.Title">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="CommentView" parent="@android:style/Theme.Holo.Light">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">#f5f5f5</item>
+        <item name="android:paddingBottom">1dp</item>
+        <item name="android:paddingLeft">1dp</item>
+        <item name="android:paddingRight">1dp</item>
+        <item name="android:paddingTop">1dp</item>
+    </style>
+    <style name="CommentViewInterior" parent="@android:style/Theme.Holo.Light">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">#ffffff</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:paddingLeft">3dp</item>
+        <item name="android:paddingRight">3dp</item>
+        <item name="android:paddingTop">3dp</item>
+    </style>
+    <style name="CommentViewInterior.Text">
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="CommentViewMetadata" parent="@android:style/Theme.Holo.Light">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">#a0a0a0</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:paddingBottom">1dp</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingRight">4dp</item>
+        <item name="android:paddingTop">1dp</item>
+    </style>
+    <style name="CommentViewMetadata.Author">
+        <item name="android:paddingLeft">0dp</item>
+    </style>
+    <style name="CommentViewMetadata.Time">
+        <item name="android:paddingRight">0dp</item>
+    </style>
+
 </resources>

@@ -2,41 +2,51 @@ package com.tellmas.android.redditor;
 
 import java.net.URI;
 
-import android.app.ActionBar;
 import android.app.Activity;
-//import android.app.Fragment;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 //import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 /**
  *
  */
 public class LinkDisplayFragment extends Fragment {
 
+    private Redditor parentActivity;
+
     private WebView webview;
     private ProgressBar linkLoadingProgressBar;
 
     private String url;
 
+    private String subreddit;
+    private String linkId;
+
 
     /**
      *
      */
-    public static LinkDisplayFragment newInstance(final String url) {
+    public static LinkDisplayFragment newInstance(final String url, final String subreddit, final String linkId) {
+        Log.d(GlobalDefines.LOG_TAG, "LinkDisplayFragment: newInstance()");
+        Log.v(GlobalDefines.LOG_TAG, "LinkDisplayFragment: newInstance(): subreddit: " + subreddit + " - linkId: " + linkId);
+
         final LinkDisplayFragment thisFragment = new LinkDisplayFragment();
 
         final Bundle args = new Bundle();
         args.putString(GlobalDefines.BUNDLE_KEY_FOR_URL, url);
+        args.putString(GlobalDefines.BUNDLE_KEY_FOR_SUBREDDIT_NAME, subreddit);
+        args.putString(GlobalDefines.BUNDLE_KEY_FOR_LINK_ID, linkId);
         thisFragment.setArguments(args);
 
         return thisFragment;
@@ -50,6 +60,8 @@ public class LinkDisplayFragment extends Fragment {
    public void onAttach(final Activity activity) {
        Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onAttach()");
        super.onAttach(activity);
+
+       this.parentActivity = (Redditor) activity;
    }
 
 
@@ -68,6 +80,13 @@ public class LinkDisplayFragment extends Fragment {
             Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onCreateView(): no url in the bundle, so must be the initial instance of " + this.getClass().getSimpleName());
         } catch (final Exception e) {
             Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onCreateView(): some other exception...", e);
+        }
+
+        try {
+            this.subreddit = savedInstanceState.getString(GlobalDefines.BUNDLE_KEY_FOR_SUBREDDIT_NAME);
+            this.linkId = savedInstanceState.getString(GlobalDefines.BUNDLE_KEY_FOR_LINK_ID);
+        } catch (final Exception e) {
+            Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onCreateView(): exception getting the subreddit name and link id from the Bundle", e);
         }
     }
 
@@ -161,6 +180,18 @@ public class LinkDisplayFragment extends Fragment {
            this.webview.loadUrl(this.url);
        }
 
+       // --- Comments Button ---
+       final TextView commentsButton = (TextView) this.getView().findViewById(R.id.comments_button);
+       commentsButton.setOnClickListener(new OnClickListener() {
+           @Override
+           public void onClick(final View v) {
+               Log.d(GlobalDefines.LOG_TAG, "commentsButton.onClick()");
+
+               Log.v(GlobalDefines.LOG_TAG, "commentsButton.onClick(): subreddit: " + LinkDisplayFragment.this.subreddit + " - link id: " + LinkDisplayFragment.this.linkId);
+               LinkDisplayFragment.this.parentActivity.displayCommentsFragment(LinkDisplayFragment.this.subreddit, LinkDisplayFragment.this.linkId);
+           }
+       });
+
    }
 
 
@@ -179,9 +210,7 @@ public class LinkDisplayFragment extends Fragment {
            final URI uri = URI.create(newUrl);
        } catch (final IllegalArgumentException iae) {
            // if the url wasn't valid... load a blank page.
-           this.webview.loadDataWithBaseURL(null, "<html></html>", "text/html", "utf-8", null);
-           this.linkLoadingProgressBar.setIndeterminate(false);
-           this.linkLoadingProgressBar.setProgress(100);
+           this.blankTheDisplay();
            return;
        }
 
@@ -195,7 +224,7 @@ public class LinkDisplayFragment extends Fragment {
            if (!this.url.equals(newUrl)) {
                // ...blank the webview...
                Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": loadNewUrl(): blanking the webview due to new url");
-               this.webview.loadDataWithBaseURL(null, "<html></html>", "text/html", "utf-8", null);
+               this.blankTheDisplay();
                // ...and set to load the new one.
                isNewUrl = true;
                this.linkLoadingProgressBar.setProgress(0);
@@ -215,6 +244,30 @@ public class LinkDisplayFragment extends Fragment {
            this.url = newUrl;
        }
 
+   }
+
+   /**
+    *
+    */
+   public void loadNewLink(final String subreddit, final String linkId, final String url) {
+       Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": loadNewLink()");
+
+       Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": loadNewlink(): subreddit: " + subreddit + " - link id: " + linkId);
+       this.subreddit = subreddit;
+       this.linkId = linkId;
+       this.loadNewUrl(url);
+   }
+
+
+   /**
+    *
+    */
+   public void blankTheDisplay() {
+       Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": blankTheDisplay()");
+
+       this.webview.loadDataWithBaseURL(null, "<html></html>", "text/html", "utf-8", null);
+       this.linkLoadingProgressBar.setIndeterminate(false);
+       this.linkLoadingProgressBar.setProgress(100);
    }
 
 

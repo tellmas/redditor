@@ -1,8 +1,8 @@
 package com.tellmas.android.redditor;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.util.Log;
 
 /**
@@ -10,7 +10,7 @@ import android.util.Log;
  */
 public class LinkViewPagerAdapter extends FragmentPagerAdapter {
 
-    protected static int NUM_FRAGMENTS = 2;
+    protected static int NUM_FRAGMENTS = 3;
     private Redditor activity;
 
 

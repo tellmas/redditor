@@ -58,6 +58,9 @@ public final class GlobalDefines extends Application {
     public static final String DEFAULT_LISTING = "";
     public static final String DEFAULT_SORT = "hot";
 
+    // ==== =====
+    public static final String STRING_REPLACEMENT = "{value}";
+
 
     public enum RedditorTimeUnit {SECONDS, MINUTES, HOURS, DAYS};
     /**

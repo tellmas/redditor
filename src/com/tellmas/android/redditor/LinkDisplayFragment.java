@@ -6,7 +6,6 @@ import com.cd.reddit.json.mapping.RedditLink;
 
 import android.app.Activity;
 import android.app.Fragment;
-//import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -121,7 +120,6 @@ public class LinkDisplayFragment extends Fragment {
        // --- progress bar for page load ---
        this.linkLoadingProgressBar = (ProgressBar) this.getView().findViewById(R.id.link_loading_progress);
 
-
        Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": getting the WebView...");
        this.webview = (WebView) this.getView().findViewById(R.id.link_display);
        Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": getting the WebView settings...");
@@ -165,7 +163,6 @@ public class LinkDisplayFragment extends Fragment {
 
        });
        this.webview.setWebViewClient(new WebViewClient() {
-
            @Override
            public boolean shouldOverrideUrlLoading(final WebView view, final String urlNewString) {
                Log.v(GlobalDefines.LOG_TAG, "WebViewClient: shouldOverrideUrlLoading()");
@@ -190,14 +187,12 @@ public class LinkDisplayFragment extends Fragment {
            @Override
            public void onClick(final View v) {
                Log.d(GlobalDefines.LOG_TAG, "commentsButton.onClick()");
-
                Log.v(GlobalDefines.LOG_TAG, "commentsButton.onClick(): subreddit: " + LinkDisplayFragment.this.subreddit);
                Log.v(GlobalDefines.LOG_TAG, "commentsButton.onClick(): link id: " + LinkDisplayFragment.this.linkId);
 
                LinkDisplayFragment.this.parentActivity.displayCommentsFragment(LinkDisplayFragment.this.theLinkData);
            }
        });
-
    }
 
 
@@ -220,9 +215,6 @@ public class LinkDisplayFragment extends Fragment {
            return;
        }
 
-
-
-
        // --- Determine if we've been told to load the same url as we already have ---
        boolean isNewUrl = false;
        try {
@@ -243,14 +235,13 @@ public class LinkDisplayFragment extends Fragment {
        }
 
        Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": loadNewUrl(): isNewUrl: " + Boolean.valueOf(isNewUrl).toString());
-
        if (isNewUrl) {
            // ...load the new url.
            this.webview.loadUrl(newUrl);
            this.url = newUrl;
        }
-
    }
+
 
    /**
     *

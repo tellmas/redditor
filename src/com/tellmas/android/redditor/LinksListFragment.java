@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cd.reddit.Reddit;
@@ -52,7 +51,6 @@ public class LinksListFragment extends Fragment implements ActionBar.OnNavigatio
     private String theAfterLink = null;
     private int runningCountOfLinksRetrieved = 0;
 
-    //private String currentSubreddit = GlobalDefines.DEFAULT_LISTING;
     protected String currentSort = GlobalDefines.DEFAULT_SORT;
 
     protected int currentSubredditIndex = 0;
@@ -89,7 +87,6 @@ public class LinksListFragment extends Fragment implements ActionBar.OnNavigatio
             Log.v(GlobalDefines.LOG_TAG, "Handler: handleMessage(): the new after: " + LinksListFragment.this.theAfterLink);
 
             LinksListFragment.this.isRetrievingLinks = false;
-            //LinksListFragment.this.updateSpinner();
             LinksListFragment.this.toggleHourGlass();
 
             LinksListFragment.this.runningCountOfLinksRetrieved += newLinks.size();
@@ -128,8 +125,6 @@ public class LinksListFragment extends Fragment implements ActionBar.OnNavigatio
         super.onAttach(activity);
 
         this.parentActivity = (Redditor) activity;
-
-        //
         this.sortByDisplayStrings = this.getResources().getStringArray(R.array.sort_by_strings);
     }
 
@@ -147,7 +142,6 @@ public class LinksListFragment extends Fragment implements ActionBar.OnNavigatio
         super.onCreateView(inflater, container, savedInstanceState);
 
         this.setHasOptionsMenu(true);
-
         return inflater.inflate(R.layout.listing_fragment, container, false);
     }
 
@@ -173,7 +167,6 @@ public class LinksListFragment extends Fragment implements ActionBar.OnNavigatio
             @Override
             //public void onItemSelected(final AdapterView<?> parentView, final View childView, final int position, final long id) {
             public void onItemClick(final AdapterView<?> parentView, final View childView, final int position, final long id) {
-                //Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onItemSelected()");
                 Log.d(GlobalDefines.LOG_TAG, "AdapterView.OnItemClickListener: onItemClick()");
 
                 final RedditLink link = LinksListFragment.this.links.get(position);
@@ -461,9 +454,7 @@ public class LinksListFragment extends Fragment implements ActionBar.OnNavigatio
             return false;
         }
 
-
         return true;
     }
-
 
 }

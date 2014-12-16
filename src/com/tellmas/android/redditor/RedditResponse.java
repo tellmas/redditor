@@ -1,7 +1,6 @@
 package com.tellmas.android.redditor;
 
 import java.util.List;
-
 import com.cd.reddit.json.mapping.RedditLink;
 
 /**
@@ -27,5 +26,4 @@ public class RedditResponse {
    public String getAfter() {
        return this.after;
    }
-
 }

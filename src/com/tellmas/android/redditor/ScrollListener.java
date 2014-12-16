@@ -8,9 +8,6 @@ import android.widget.AbsListView;
  */
 public abstract class ScrollListener implements AbsListView.OnScrollListener {
 
-   //private int currentFirstVisibleItem;
-   //private int currentVisibleItemCount;
-
    // === ScrollListener Defaults ===
    private static final int DEFAULT_VISIBLE_THRESHOLD = 1;
    private static final int DEFAULT_STARTING_PAGE_INDEX = 0;
@@ -66,8 +63,6 @@ public abstract class ScrollListener implements AbsListView.OnScrollListener {
    @Override
    public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount, final int totalItemCount) {
        Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onScroll()");
-       //this.currentFirstVisibleItem = firstVisibleItem;
-       //this.currentVisibleItemCount = visibleItemCount;
 
        // If the total item count is zero and the previous isn't, assume the
        // list is invalidated and should be reset back to initial state

@@ -35,7 +35,6 @@ public class CommentsListAdapter implements ListAdapter {
     private final List<RedditComment> commentsList;
 
 
-
     /**
      *
      */
@@ -167,7 +166,6 @@ public class CommentsListAdapter implements ListAdapter {
         } catch (JSONException je) {}
         int arrayLen = jsonArray.length();
         for (int i=0; i < arrayLen; i++) {
-            //Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": getView(): " + repliesItr.next().toString());
             JSONObject reply = null;
             try {
                 reply = new JSONObject(jsonArray.get(i).toString());
@@ -223,7 +221,6 @@ public class CommentsListAdapter implements ListAdapter {
         }
 
         // --- Create and attach the comment View. ---
-        //final TextView thisCommentView = new TextView(this.parentActivity);
         final View commentView = this.inflater.inflate(R.layout.comments_list_comment_view, (ViewGroup)containerView, false);
         commentView.setPadding(
                 indentWidth * level

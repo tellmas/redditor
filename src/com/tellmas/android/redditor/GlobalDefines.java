@@ -90,7 +90,6 @@ public final class GlobalDefines extends Application {
             time.setTimeUnit(RedditorTimeUnit.MINUTES);
         }
 
-
         return time;
     }
 

@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.cd.reddit.Reddit;
 import com.cd.reddit.RedditException;
-import com.cd.reddit.http.util.RedditApiParameterConstants;
 import com.cd.reddit.json.mapping.RedditComment;
 import com.cd.reddit.json.mapping.RedditLink;
 import com.cd.reddit.json.util.RedditComments;
@@ -145,12 +144,9 @@ public class CommentsFragment extends Fragment {
        this.commentsListView.setVisibility(View.INVISIBLE);
        this.commentsListView.setAdapter(this.commentsListAdapter);
 
-       //ViewGroup link_info_section = (ViewGroup) this.parentActivity.findViewById(R.id.link_info);
        ViewGroup linkInfoSection = (ViewGroup) this.parentActivity.getLayoutInflater().inflate(
                R.layout.comments_list_link_data,
-               //this.commentsListView);
                null);
-       //link_info_section.setVisibility(View.INVISIBLE);
 
        TextView scoreView = (TextView) linkInfoSection.findViewById(R.id.link_score);
        TextView titleView = (TextView) linkInfoSection.findViewById(R.id.link_title);
@@ -168,7 +164,6 @@ public class CommentsFragment extends Fragment {
        this.commentsLoadingProgressBar.setIndeterminate(false);
        this.commentsLoadingProgressBar.setProgress(this.commentsLoadingProgressBar.getMax());
        this.commentsLoadingProgressBar.setProgress(100);
-       //linkInfoSection.setVisibility(View.VISIBLE);
        this.commentsListView.setVisibility(View.VISIBLE);
    }
 
@@ -198,24 +193,13 @@ public class CommentsFragment extends Fragment {
         @Override
         protected RedditComments doInBackground(String... subredditAndLinkId) {
 
-            //publishProgress(25);
             RedditComments theComments = null;
             try {
                 theComments = CommentsFragment.this.reddit.commentsFor(subredditAndLinkId[0], subredditAndLinkId[1]);
             } catch (final RedditException re) {
                 Log.w(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": doInBackground(): Exception getting comments for: " + subredditAndLinkId[0] + " - link: " + subredditAndLinkId[1], re);
             }
-            //publishProgress(50);
             return theComments;
-        }
-
-
-        /*
-         * (non-Javadoc)
-         * @see android.os.AsyncTask#onProgressUpdate(Params[])
-         */
-        protected void onProgressUpdate(Integer... progressPercentage) {
-            this.progressBar.setProgress(progressPercentage[0]);
         }
 
 
@@ -226,10 +210,6 @@ public class CommentsFragment extends Fragment {
         @Override
         protected void onPostExecute(RedditComments theComments) {
 
-            Log.w(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onPostExecute(): Is the comments object null: " + theComments == null ? "yes" : "no");
-
-            //this.progressBar.setProgress(75);
-
             List<RedditComment> commentsList = null;
             try {
                 commentsList = theComments.getComments();
@@ -239,12 +219,7 @@ public class CommentsFragment extends Fragment {
             CommentsFragment.this.commentsListAdapter = new CommentsListAdapter(
                     (Activity)CommentsFragment.this.parentActivity,
                     commentsList);
-            //CommentsFragment.this.commentsListView = (ListView) CommentsFragment.this.getView().findViewById(R.id.comments_list);
-            //CommentsFragment.this.commentsListView.setVisibility(View.INVISIBLE);
-            //CommentsFragment.this.commentsListView.setAdapter(commentsListAdapter);
             CommentsFragment.this.displayComments();
-
-            //this.progressBar.setProgress(100);
         }
     }
 

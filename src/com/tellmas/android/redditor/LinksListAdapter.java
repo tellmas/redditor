@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.cd.reddit.json.mapping.RedditLink;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.tellmas.android.redditor.GlobalDefines.RedditorTimeUnit;
+
 
 /**
  *
@@ -154,6 +154,7 @@ public class LinksListAdapter extends BaseAdapter {
                 // java.net.URI allows "self" w/o throwing the exception. Not sure why.
                 // getThumbnail() returns "self" if there is no thumbnail node.
                 // a temporary hack job:
+                // TODO
             } catch (final IllegalArgumentException iae) {
                 thumbnailUri = "";
             }

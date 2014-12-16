@@ -2,6 +2,8 @@ package com.tellmas.android.redditor;
 
 import java.net.URI;
 
+import com.cd.reddit.json.mapping.RedditLink;
+
 import android.app.Activity;
 import android.app.Fragment;
 //import android.content.Intent;
@@ -32,6 +34,7 @@ public class LinkDisplayFragment extends Fragment {
 
     private String subreddit;
     private String linkId;
+    private RedditLink theLinkData;
 
 
     /**
@@ -39,7 +42,8 @@ public class LinkDisplayFragment extends Fragment {
      */
     public static LinkDisplayFragment newInstance(final String url, final String subreddit, final String linkId) {
         Log.d(GlobalDefines.LOG_TAG, "LinkDisplayFragment: newInstance()");
-        Log.v(GlobalDefines.LOG_TAG, "LinkDisplayFragment: newInstance(): subreddit: " + subreddit + " - linkId: " + linkId);
+        Log.v(GlobalDefines.LOG_TAG, "LinkDisplayFragment: newInstance(): subreddit: " + subreddit);
+        Log.v(GlobalDefines.LOG_TAG, "LinkDisplayFragment: newInstance(): linkId: " + linkId);
 
         final LinkDisplayFragment thisFragment = new LinkDisplayFragment();
 
@@ -187,8 +191,10 @@ public class LinkDisplayFragment extends Fragment {
            public void onClick(final View v) {
                Log.d(GlobalDefines.LOG_TAG, "commentsButton.onClick()");
 
-               Log.v(GlobalDefines.LOG_TAG, "commentsButton.onClick(): subreddit: " + LinkDisplayFragment.this.subreddit + " - link id: " + LinkDisplayFragment.this.linkId);
-               LinkDisplayFragment.this.parentActivity.displayCommentsFragment(LinkDisplayFragment.this.subreddit, LinkDisplayFragment.this.linkId);
+               Log.v(GlobalDefines.LOG_TAG, "commentsButton.onClick(): subreddit: " + LinkDisplayFragment.this.subreddit);
+               Log.v(GlobalDefines.LOG_TAG, "commentsButton.onClick(): link id: " + LinkDisplayFragment.this.linkId);
+
+               LinkDisplayFragment.this.parentActivity.displayCommentsFragment(LinkDisplayFragment.this.theLinkData);
            }
        });
 
@@ -249,13 +255,24 @@ public class LinkDisplayFragment extends Fragment {
    /**
     *
     */
-   public void loadNewLink(final String subreddit, final String linkId, final String url) {
+   public void loadNewLink(final RedditLink linkData) {
        Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": loadNewLink()");
 
-       Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": loadNewlink(): subreddit: " + subreddit + " - link id: " + linkId);
-       this.subreddit = subreddit;
-       this.linkId = linkId;
-       this.loadNewUrl(url);
+       this.theLinkData = linkData;
+       this.subreddit = this.theLinkData.getSubreddit();
+       this.linkId = this.theLinkData.getId();
+       Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": loadNewlink(): subreddit: " + this.subreddit + " - link id: " + this.linkId);
+
+       final String linkUrl = this.theLinkData.getUrl();
+       URI theLinkUri = null;
+       try {
+           theLinkUri = URI.create(linkUrl);
+       } catch (final IllegalArgumentException iae) {
+           Log.e(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onItemClick(): " + linkUrl + " is not a proper url");
+           return;
+       }
+
+       this.loadNewUrl(linkUrl);
    }
 
 

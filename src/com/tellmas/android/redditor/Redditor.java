@@ -1,9 +1,8 @@
 package com.tellmas.android.redditor;
 
-import java.net.URI;
-
 import com.cd.reddit.Reddit;
 import com.cd.reddit.RedditException;
+import com.cd.reddit.json.mapping.RedditLink;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -134,10 +133,10 @@ public class Redditor extends Activity {
    /**
     *
     */
-   protected void displayCommentsFragment(final String subreddit, final String linkId) {
+   protected void displayCommentsFragment(final RedditLink linkData) {
        Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": displayCommentsFragment()");
 
-       this.commentsFragment.loadNewComments(subreddit, linkId);
+       this.commentsFragment.loadNewComments(linkData);
        // === Switch to the comments fragment ===
        this.linkViewPager.setCurrentItem(2, true);
        this.currentlyDisplayedFragment = this.commentsFragment;
@@ -147,10 +146,10 @@ public class Redditor extends Activity {
    /**
     *
     */
-   protected void displayNewLinkFragment(final String subreddit, final String linkId, final URI newUrl) {
+   protected void displayNewLinkFragment(final RedditLink theLinkData) {
        Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": displayNewLinkFragment()");
 
-       this.linkDisplayFragment.loadNewLink(subreddit, linkId, newUrl.toString());
+       this.linkDisplayFragment.loadNewLink(theLinkData);
        // === Switch to the webview fragment ===
        this.linkViewPager.setCurrentItem(1, true);
        this.currentlyDisplayedFragment = this.linkDisplayFragment;

@@ -1,6 +1,5 @@
 package com.tellmas.android.redditor;
 
-import java.net.URI;
 import java.util.List;
 
 import android.app.ActionBar;
@@ -176,19 +175,9 @@ public class LinksListFragment extends Fragment implements ActionBar.OnNavigatio
             public void onItemClick(final AdapterView<?> parentView, final View childView, final int position, final long id) {
                 //Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onItemSelected()");
                 Log.d(GlobalDefines.LOG_TAG, "AdapterView.OnItemClickListener: onItemClick()");
-                final RedditLink link = LinksListFragment.this.links.get(position);
-                final String linkUrl = link.getUrl();
-                URI theLinkUri = null;
-                try {
-                    theLinkUri = URI.create(linkUrl);
-                } catch (final IllegalArgumentException iae) {
-                    Log.e(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onItemClick(): " + linkUrl + " is not a proper url");
-                }
-                LinksListFragment.this.parentActivity.displayNewLinkFragment(
-                        link.getSubreddit(),
-                        link.getId(),
-                        theLinkUri);
 
+                final RedditLink link = LinksListFragment.this.links.get(position);
+                LinksListFragment.this.parentActivity.displayNewLinkFragment(link);
             }
         });
 

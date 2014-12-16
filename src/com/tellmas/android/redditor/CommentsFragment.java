@@ -37,9 +37,7 @@ public class CommentsFragment extends Fragment {
     private ListView commentsListView;
 
     private CommentsListAdapter commentsListAdapter;
-    private RedditLink linkData;
-
-    private int displayCallCount = 0;
+    private RedditLink theLinkData;
 
 
     /**
@@ -118,22 +116,22 @@ public class CommentsFragment extends Fragment {
 
        // --- progress bar for comments loading ---
        this.commentsLoadingProgressBar = (ProgressBar) this.getView().findViewById(R.id.comments_loading_progress);
-
-       if (this.subreddit != null && this.linkId != null) {
-           this.loadNewComments(this.subreddit, this.linkId);
-       }
    }
 
 
    /**
     *
     */
-   public void loadNewComments(final String subreddit, final String linkId) {
+   public void loadNewComments(final RedditLink linkData) {
        Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": loadNewComments()");
-       Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": loadNewComments(): subreddit: " + subreddit + " - link id: " + linkId);
 
-       new RequestCommentsTask().execute(subreddit, linkId);
-       new RequestLinkTask().execute(linkId);
+       this.theLinkData = linkData;
+
+       Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": loadNewComments(): subreddit: " + linkData.getSubreddit());
+       Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": loadNewComments(): link id: " + linkData.getId());
+
+       this.commentsLoadingProgressBar.setIndeterminate(true);
+       new RequestCommentsTask().execute(linkData.getSubreddit(), linkData.getId());
    }
 
 
@@ -142,12 +140,6 @@ public class CommentsFragment extends Fragment {
     */
    private void displayComments() {
        Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": displayComments()");
-
-       this.displayCallCount++;
-       if (this.displayCallCount != 2) {
-           return;
-       }
-
 
        this.commentsListView = (ListView) CommentsFragment.this.getView().findViewById(R.id.comments_list);
        this.commentsListView.setVisibility(View.INVISIBLE);
@@ -166,73 +158,18 @@ public class CommentsFragment extends Fragment {
        TextView timeView = (TextView) linkInfoSection.findViewById(R.id.link_time);
        TextView submitterView = (TextView) linkInfoSection.findViewById(R.id.link_submitter);
 
-       scoreView.setText(Integer.toString(this.linkData.getUps() - this.linkData.getDowns()));
-       titleView.setText(this.linkData.getTitle());
-       subredditView.setText(GlobalDefines.SUBREDDIT_URI_PREFIX.concat(this.linkData.getSubreddit()));
-       timeView.setText(GlobalDefines.submissionTimeStringBuilder(this.linkData.getCreated_utc(), this.parentActivity));
-       submitterView.setText(this.linkData.getAuthor());
+       scoreView.setText(Integer.toString(this.theLinkData.getUps() - this.theLinkData.getDowns()));
+       titleView.setText(this.theLinkData.getTitle());
+       subredditView.setText(GlobalDefines.SUBREDDIT_URI_PREFIX.concat(this.theLinkData.getSubreddit()));
+       timeView.setText(GlobalDefines.submissionTimeStringBuilder(this.theLinkData.getCreated_utc(), this.parentActivity));
+       submitterView.setText(this.theLinkData.getAuthor());
 
        this.commentsListView.addHeaderView(linkInfoSection);
        this.commentsLoadingProgressBar.setIndeterminate(false);
        this.commentsLoadingProgressBar.setProgress(this.commentsLoadingProgressBar.getMax());
+       this.commentsLoadingProgressBar.setProgress(100);
        //linkInfoSection.setVisibility(View.VISIBLE);
        this.commentsListView.setVisibility(View.VISIBLE);
-   }
-
-
-   /**
-    * TODO
-    */
-   private class RequestLinkTask extends AsyncTask<String, Integer, RedditLink> {
-
-       ProgressBar progressBar = CommentsFragment.this.commentsLoadingProgressBar;
-
-       /*
-        * (non-Javadoc)
-        * @see android.os.AsyncTask#onPreExecute()
-        */
-       @Override
-       protected void onPreExecute() {
-           this.progressBar.setProgress(0);
-           this.progressBar.setIndeterminate(true);
-       }
-
-
-       /*
-        * (non-Javadoc)
-        * @see android.os.AsyncTask#doInBackground(Params[])
-        */
-       @Override
-       protected RedditLink doInBackground(String... linkId) {
-           Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": doInBackground()");
-           Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": doInBackground(): link id: " + linkId[0]);
-
-           RedditLink theLink = null;
-           try {
-               List <RedditLink> linkDataList = CommentsFragment.this.reddit.infoForId(
-                       RedditApiParameterConstants.LINK_TYPE + linkId[0]);
-               if (! linkDataList.isEmpty()) {
-                   theLink = linkDataList.get(0);
-               }
-           } catch (final RedditException re) {
-               Log.w(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": doInBackground(): Exception getting link data for: " + linkId[0], re);
-           }
-           return theLink;
-       }
-
-
-       /*
-        * (non-Javadoc)
-        * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
-        */
-       @Override
-       protected void onPostExecute(RedditLink theLinkData) {
-           Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onPostExecute()");
-           Log.d(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onPostExecute(): Is the link data object null: " + theLinkData == null ? "yes" : "no");
-
-           CommentsFragment.this.linkData = theLinkData;
-           CommentsFragment.this.displayComments();
-       }
    }
 
 
@@ -296,7 +233,9 @@ public class CommentsFragment extends Fragment {
             List<RedditComment> commentsList = null;
             try {
                 commentsList = theComments.getComments();
-            } catch (NullPointerException npe) {}
+            } catch (NullPointerException npe) {
+                Log.w(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": onPostExecute(): null RedditComments object");
+            }
             CommentsFragment.this.commentsListAdapter = new CommentsListAdapter(
                     (Activity)CommentsFragment.this.parentActivity,
                     commentsList);

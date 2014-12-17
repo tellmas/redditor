@@ -144,9 +144,6 @@ public class CommentsListAdapter implements ListAdapter {
 
         ObjectNode replies;
         try {
-
-            // TODO need to check for a node that indicates more replies and display that.
-
             replies = (ObjectNode) commentData.getReplies();
         // if the returned object is not an ObjectNode...
         } catch (ClassCastException cce) {
@@ -155,8 +152,6 @@ public class CommentsListAdapter implements ListAdapter {
             return commentContainer;
         }
         Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": getView(): getReplies() returns object of type: " + replies.getClass().toString());
-
-        //Log.v(GlobalDefines.LOG_TAG, this.getClass().getSimpleName() + ": getView(): replies: " + replies.toString());
 
         JsonNode jn = replies.get(RedditJsonConstants.DATA);
         jn = jn.get(RedditJsonConstants.CHILDREN);

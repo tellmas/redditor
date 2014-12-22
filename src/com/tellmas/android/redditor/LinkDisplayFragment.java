@@ -157,6 +157,7 @@ public class LinkDisplayFragment extends Fragment {
                } else {
                    // ...so display the progress.
                    Log.v(GlobalDefines.LOG_TAG, "WebChromeClient: onProgressChanged(): setting progress (and that's it)");
+                   LinkDisplayFragment.this.linkLoadingProgressBar.setIndeterminate(false);
                    LinkDisplayFragment.this.linkLoadingProgressBar.setProgress(newProgress);
                }
            }
